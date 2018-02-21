@@ -75,9 +75,26 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func composeAction(_ sender: Any) {
+        performSegue(withIdentifier: "newSegue", sender: nil)
+        
+    }
     
     @IBAction func didTapLogout(_ sender: Any) {
         APIManager.shared.logout()
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier != "newSegue" ) {
+            if segue.identifier != "segueProfile" {
+        let cell = sender as! UITableViewCell
+        if let indexPath = tableView.indexPath(for: cell) {
+            let detailViewController = segue.destination as! DetailedViewController
+            detailViewController.tweet = tweets[indexPath.row]
+            }
+        }
+        }
+        
+        
     }
     
     
